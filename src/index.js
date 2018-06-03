@@ -1,13 +1,11 @@
 const AWS = require('aws-sdk')
 const SQS = new AWS.SQS({ region: 'eu-west-1' })
+const test = require('./test')
 
 exports.handler = async (event, context, callback) => {
   const message = JSON.parse(event.Records.pop().Sns.Message)
-  const response = {
-    max_id: parseInt(message.since_id) + Math.round(Math.random() * 98),
-    region_id: parseInt(message.region_id),
-    tweets_count: 98
-  }
+  const response = test(message)
+  console.log(response)
 
   return new Promise((resolve, reject) => {
     SQS.sendMessage({
