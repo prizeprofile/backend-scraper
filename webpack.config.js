@@ -1,18 +1,16 @@
 const nodeExternals = require('webpack-node-externals')
 const Nodemon = require('nodemon-webpack-plugin')
-const Dotenv = require('dotenv-webpack')
 
 function basePath (dir) {
   return require('path').join(__dirname, dir)
 }
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/index.js',
   target: 'node',
   externals: [nodeExternals()],
   plugins: [
-    new Nodemon(),
-    new Dotenv()
+    new Nodemon()
   ],
   output: {
     path: basePath('dist'),
