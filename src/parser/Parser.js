@@ -1,8 +1,7 @@
-import Tweet from '@/scraper/parser/tweet/Tweet'
-import Competition from '@/storage/models/Competition'
-import TweetValidator from '@/scraper/parser/tweet/TweetValidator'
+import Tweet from './tweet/Tweet'
+import TweetValidator from './tweet/TweetValidator'
 
-export default class Parser {
+exports = class Parser {
   /**
    * Class @constructor.
    *
