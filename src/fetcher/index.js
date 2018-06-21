@@ -20,6 +20,5 @@ exports = async ({ since_id, params }) => {
     .pack(params)
 
   // Fetches the tweets.
-  return new Fetcher(client, bag)
-    .scrape()
+  return new Fetcher(client, bag).scrape()
 }

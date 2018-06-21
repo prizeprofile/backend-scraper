@@ -8,6 +8,14 @@ exports = class ParameterBag {
   }
 
   /**
+   * Returns API method.
+   * @return {string}
+   */
+  get method () {
+    return this.data.method || 'search/tweets'
+  }
+
+  /**
    * Packs ParameterBag with data.
    *
    * @param {object|string} payload
@@ -48,10 +56,11 @@ exports = class ParameterBag {
     return {
       count: 100,
       lang: this.data.lang,
-      q: this.data.keywords.join(' OR '),
-      geocode: this.geocode(),
+      tweet_mode: 'extended',
       include_entities: true,
-      tweet_mode: 'extended'
+      geocode: this.geocode(),
+      since_id: this.data.since_id,
+      q: this.data.keywords.join(' OR ')
     }
   }
 }

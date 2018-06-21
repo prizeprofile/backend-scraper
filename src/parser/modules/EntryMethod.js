@@ -1,10 +1,12 @@
-import ParserModule from './ParserModule'
+const ParserModule = require('./ParserModule')
 
-export default class EntryMethod extends ParserModule {
+exports = class EntryMethod extends ParserModule {
   /**
    * @inheritdoc
    */
-  run () {
-    this.$next()
+  async run () {
+    console.log('EntryMethod', this.competition)
+    
+    return this.$skip()
   }
 }

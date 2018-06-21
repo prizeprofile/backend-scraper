@@ -1,5 +1,5 @@
 
-export default class Tweet {
+exports = class Tweet {
   /**
    * Class constructor.
    *
@@ -18,13 +18,11 @@ export default class Tweet {
   from (data) {
     let result = this.validator.run(data)
 
-    if (!result || typeof result !== 'object') {
+    if (! result || typeof result !== 'object') {
       this.valid = false
     } else {
       this.data = result
     }
-
-    delete this.validator
 
     return this
   }

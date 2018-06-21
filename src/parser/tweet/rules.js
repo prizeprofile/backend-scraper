@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import { htmlEscape } from 'twitter-text'
+const _ = require('lodash')
+const htmlEscape = require('twitter-text').htmlEscape
 
-export default {
+exports = {
   determinants: [
     {
       the: 'retweeted_status',

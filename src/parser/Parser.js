@@ -5,48 +5,48 @@ exports = class Parser {
   /**
    * Class @constructor.
    *
+   * @param {number} region
    * @param {ParserModule[]}
    */
-  constructor (modules) {
+  constructor (modules, region) {
     this.modules = modules
+
+    this.region = region
   }
 
   /**
    * Pipes data from Twitter to Parser.
    *
-   * @param {ParameterBag} bag
    * @param {object} data
    * @return {void}
    */
-  async pipe (bag, data) {
+  async pipe (data) {
     let withValidation = new TweetValidator()
 
-    const competition = new Tweet(withValidation).from(data)
+    const tweet = new Tweet(withValidation).from(data)
 
-    if (!competition.isTweet()) {
+    if (!tweet.isTweet()) {
       return
     }
 
-    // All following DB queries should be put into a transaction.
-    this.runModules(competition)
-      .then(competition => this.saveCompetition(competition))
+    // Runs all the modules that parse data from the tweet.
+    let competition = await this.runModules(tweet)
+
+    // Saves the result to db.
+    await this.saveCompetition(competition)
   }
 
   /**
    * Passes the competition through all registered modules.
    *
    * @param {Tweet} competition
-   * @param {Transaction} trx
    * @return {Promise<Tweet>}
    */
   async runModules (competition) {
-    return this.modules.reduce((chain, ParserModule) => {
+    return this.modules.reduce(async (chain, ParserModule) => {
       // Runs every module. Each time the module calls next with a data,
       // that data is passed to the next module as carry.
-      return chain.then(carry => new Promise(resolve => {
-        new ParserModule(carry, resolve)
-          .run()
-      }))
+      return new ParserModule(await chain).run()
     }, Promise.resolve(competition))
   }
 
@@ -57,14 +57,6 @@ exports = class Parser {
    * @return {void}
    */
   async saveCompetition (competition) {
-    console.log(competition)
-    // TODO: Bear with me.
-    new Competition({
-      text: competition.data.tweet.text,
-      posted: competition.data.tweet.created_at,
-      location: competition.data.tweet.location,
-      tweet_id: competition.data.tweet.tweet_id,
-      retweets: competition.data.tweet.retweets
-    }).save()
+    console.log('Save', competition)
   }
 }

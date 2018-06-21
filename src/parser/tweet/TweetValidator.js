@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import rules from './rules'
+const _ = require('lodash')
+const rules = require('./rules')
 
-export default class TweetValidator {
+exports = class TweetValidator {
   /**
    * Runs all rules against given data and transforms it into our standard.
    */
