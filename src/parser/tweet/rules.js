@@ -1,7 +1,6 @@
 const _ = require('lodash')
-const htmlEscape = require('twitter-text').htmlEscape
 
-exports = {
+module.exports = {
   determinants: [
     {
       the: 'retweeted_status',
@@ -90,10 +89,6 @@ exports = {
   ],
 
   editors: [
-    {
-      run: 'text',
-      through: htmlEscape
-    },
     {
       run: 'location',
       through: loc => loc.toString()

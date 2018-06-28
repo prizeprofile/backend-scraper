@@ -1,4 +1,4 @@
-const EntryMethod = require('./modules/EntryMethod')
-const CompetitionEndDate = require('./modules/CompetitionEndDate')
+const EntryMethod = require('./EntryMethod')
+const CompetitionEndDate = require('./CompetitionEndDate')
 
-export const Modules = [ EntryMethod, CompetitionEndDate ]
+module.exports = [ EntryMethod, CompetitionEndDate ]

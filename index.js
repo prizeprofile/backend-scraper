@@ -1,5 +1,6 @@
 // TODO: Default region.
-const SQS = new require('aws-sdk').SQS({ region: 'eu-west-1' })
+const AWS = require('aws-sdk')
+const SQS = new AWS.SQS({ region: 'eu-west-1' })
 
 exports.handler = async (event, context, callback) => {
   /**
@@ -7,7 +8,7 @@ exports.handler = async (event, context, callback) => {
    * properties region_id, params and max_id.
    * @type {Object}
    */
-  const message = JSON.parse(event.Records.pop().Sns.message)
+  const message = JSON.parse(event.Records.pop().Sns.Message)
   const region_id = parseInt(message.region_id)
 
   /**
@@ -16,16 +17,17 @@ exports.handler = async (event, context, callback) => {
    * @type {Object[]}
    */
   const tweets = await require('./src/fetcher')(message)
-  console.log('tweets', tweets)
+  const tweets_count = tweets.length
 
   // Sends a message to result queue which is read by
   // the scheduler and creates the cycle.
+  // TODO: Error handling.
   SQS.sendMessage({
-    MessageBody: {
+    MessageBody: JSON.stringify({
       region_id,
-      tweets_count: tweets.length,
-      max_id: tweets[tweets.length - 1].data.tweet_id
-    },
+      tweets_count,
+      max_id: tweets_count ? tweets[tweets_count - 1].id_str : null
+    }),
     QueueUrl: process.env.TASK_QUEUE_URL
   })
 
@@ -34,7 +36,7 @@ exports.handler = async (event, context, callback) => {
    * @throws {Error}
    * @type {Promise<void>}
    */
-  require('./src/parser')(tweets, region_id)
-    .then(() => callback(null, 'success'))
-    .catch(e => callback(JSON.stringify(e)))
+  await require('./src/parser')(tweets, region_id)
+
+  callback(null, 'success')
 }

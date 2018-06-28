@@ -1,12 +1,5 @@
 
-exports = class ParameterBag {
-  /**
-   * Class construct.
-   */
-  construct () {
-    this.data = {}
-  }
-
+module.exports = class ParameterBag {
   /**
    * Returns API method.
    * @return {string}
@@ -16,13 +9,17 @@ exports = class ParameterBag {
   }
 
   /**
-   * Packs ParameterBag with data.
+   * Packs ParameterBag with params.
    *
    * @param {object|string} payload
    * @param {any} [payload=null]
    * @return {ParameterBag}
    */
   pack (payload, value = null) {
+    if (! this.data) {
+      this.data = {}
+    }
+
     if (value) {
       this.data[payload] = value
     } else {
@@ -54,7 +51,7 @@ exports = class ParameterBag {
    */
   twittify () {
     return {
-      count: 100,
+      count: 2,
       lang: this.data.lang,
       tweet_mode: 'extended',
       include_entities: true,

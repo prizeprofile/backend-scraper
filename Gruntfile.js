@@ -9,15 +9,15 @@ module.exports = (grunt) => {
     lambda_deploy: {
       default: {
         options: {
-        region: 'eu-west-1'
-      },
-        arn: 'arn:aws:lambda:eu-west-1:365488455739:function:stage-twitter-oauth'
+          region: 'eu-west-1'
+        },
+        arn: 'arn:aws:lambda:eu-west-1:365488455739:function:stage-scraper-parse-tweets'
       },
       prod: {
         options: {
-        region: 'eu-west-1'
-      },
-        arn: 'arn:aws:lambda:eu-west-1:365488455739:function:prod-twitter-oauth'
+          region: 'eu-west-1'
+        },
+        arn: 'arn:aws:lambda:eu-west-1:365488455739:function:prod-scraper-parse-tweets'
       }
     }
   })

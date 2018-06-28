@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const rules = require('./rules')
 
-exports = class TweetValidator {
+module.exports = class TweetValidator {
   /**
    * Runs all rules against given data and transforms it into our standard.
    */

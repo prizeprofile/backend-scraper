@@ -1,5 +1,5 @@
 
-exports = class Fetcher {
+module.exports = class Fetcher {
   /**
    * Class constructor.
    *

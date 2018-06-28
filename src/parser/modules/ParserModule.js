@@ -1,5 +1,5 @@
 
-exports = class ParserModule {
+module.exports = class ParserModule {
   /**
    * Class @constructor.
    *

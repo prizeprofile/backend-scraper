@@ -1,7 +1,7 @@
-import Tweet from './tweet/Tweet'
-import TweetValidator from './tweet/TweetValidator'
+const Tweet = require('./tweet/Tweet')
+const TweetValidator = require('./tweet/TweetValidator')
 
-exports = class Parser {
+module.exports = class Parser {
   /**
    * Class @constructor.
    *
@@ -57,6 +57,6 @@ exports = class Parser {
    * @return {void}
    */
   async saveCompetition (competition) {
-    console.log('Save', competition)
+    // console.log('Save', competition)
   }
 }
