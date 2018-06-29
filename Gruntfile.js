@@ -1,10 +1,11 @@
 module.exports = (grunt) => {
   grunt.initConfig({
     lambda_invoke: {
-      default: { options: {} }
+      default: {}
     },
     lambda_package: {
-      default: { options: {} }
+      default: {},
+      prod: {}
     },
     lambda_deploy: {
       default: {
