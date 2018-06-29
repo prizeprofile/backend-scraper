@@ -36,7 +36,14 @@ exports.handler = async (event, context, callback) => {
    * @throws {Error}
    * @type {Promise<void>}
    */
-  await require('./src/parser')(tweets, region_id)
+  const competitions = await require('./src/parser')(tweets, region_id)
+
+  // Pushes parsed competitions to a queue that handles saving them to DB.
+  // TODO: Error handling.
+  SQS.sendMessage({
+    MessageBody: JSON.stringify({ region_id, competitions }),
+    QueueUrl: process.env.DB_QUEUE_URL
+  })
 
   callback(null, 'success')
 }

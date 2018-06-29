@@ -51,7 +51,7 @@ module.exports = class ParameterBag {
    */
   twittify () {
     return {
-      count: 2,
+      count: 100,
       lang: this.data.lang,
       tweet_mode: 'extended',
       include_entities: true,

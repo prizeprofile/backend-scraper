@@ -30,10 +30,7 @@ module.exports = class Parser {
     }
 
     // Runs all the modules that parse data from the tweet.
-    let competition = await this.runModules(tweet)
-
-    // Saves the result to db.
-    await this.saveCompetition(competition)
+    return await this.runModules(tweet)
   }
 
   /**
@@ -48,15 +45,5 @@ module.exports = class Parser {
       // that data is passed to the next module as carry.
       return new ParserModule(await chain).run()
     }, Promise.resolve(competition))
-  }
-
-  /**
-   * Saves the competition into the Mysql.
-   *
-   * @param {object} competition
-   * @return {void}
-   */
-  async saveCompetition (competition) {
-    // console.log('Save', competition)
   }
 }

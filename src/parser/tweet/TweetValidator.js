@@ -112,7 +112,6 @@ module.exports = class TweetValidator {
    * @return {void}
    */
   deepSave (path, value, target) {
-    // console.log('deepSave path', path)
     path.split('.').reduce((tree, node, i, splitPath) => {
       // If this is the last part of the path, only set the value and stop the cycle.
       if (i === splitPath.length - 1) {
