@@ -1,5 +1,5 @@
 
-export default class Tweet {
+module.exports = class Tweet {
   /**
    * Class constructor.
    *
@@ -7,6 +7,8 @@ export default class Tweet {
    */
   constructor (validator) {
     this.validator = validator
+
+    this.container = {}
   }
 
   /**
@@ -18,13 +20,11 @@ export default class Tweet {
   from (data) {
     let result = this.validator.run(data)
 
-    if (!result || typeof result !== 'object') {
+    if (! result || typeof result !== 'object') {
       this.valid = false
     } else {
       this.data = result
     }
-
-    delete this.validator
 
     return this
   }
@@ -36,5 +36,26 @@ export default class Tweet {
    */
   isTweet () {
     return this.valid !== false
+  }
+
+  /**
+   * Binds a value to the container.
+   * @param  {string} key
+   * @param  {any} value
+   * @return {Tweet}
+   */
+  bind (key, value) {
+    this.container[key] = value
+
+    return this
+  }
+
+  /**
+   * Resolves a value from container.
+   * @param  {string} key
+   * @return {any}
+   */
+  resolve (key) {
+    return this.container[key]
   }
 }

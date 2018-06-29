@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import rules from './rules'
+const _ = require('lodash')
+const rules = require('./rules')
 
-export default class TweetValidator {
+module.exports = class TweetValidator {
   /**
    * Runs all rules against given data and transforms it into our standard.
    */
@@ -112,7 +112,6 @@ export default class TweetValidator {
    * @return {void}
    */
   deepSave (path, value, target) {
-    // console.log('deepSave path', path)
     path.split('.').reduce((tree, node, i, splitPath) => {
       // If this is the last part of the path, only set the value and stop the cycle.
       if (i === splitPath.length - 1) {
