@@ -1,6 +1,9 @@
 // TODO: Default region.
 const AWS = require('aws-sdk')
-const SQS = new AWS.SQS({ region: 'eu-west-1' })
+AWS.config.update({region: 'eu-west-1'})
+
+const SQS = new AWS.SQS()
+const SNS = new AWS.SNS()
 
 exports.handler = async (event, context, callback) => {
   /**
@@ -38,14 +41,13 @@ exports.handler = async (event, context, callback) => {
    */
   const competitions = await require('./src/parser')(tweets, region_id)
 
-  // Pushes parsed competitions to a queue that handles saving them to DB.
-  // TODO: Error handling.
-  await new Promise((resolve, reject) => {
-    SQS.sendMessage({
-      MessageBody: JSON.stringify({ region_id, competitions }),
-      QueueUrl: process.env.DB_QUEUE_URL
-    }, err => err ? reject() : resolve())
-  })
+  // Pushes parsed competitions to a lambda that saves them to the DB.
+  await SNS
+    .publish({
+      Message: JSON.stringify({ region_id, competitions }),
+      TopicArn: process.env.DB_SNS_TOPIC
+    })
+    .promise()
 
   callback(null, 'success')
 }
