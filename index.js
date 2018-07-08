@@ -40,9 +40,11 @@ exports.handler = async (event, context, callback) => {
 
   // Pushes parsed competitions to a queue that handles saving them to DB.
   // TODO: Error handling.
-  SQS.sendMessage({
-    MessageBody: JSON.stringify({ region_id, competitions }),
-    QueueUrl: process.env.DB_QUEUE_URL
+  await new Promise((resolve, reject) => {
+    SQS.sendMessage({
+      MessageBody: JSON.stringify({ region_id, competitions }),
+      QueueUrl: process.env.DB_QUEUE_URL
+    }, err => err ? reject() : resolve())
   })
 
   callback(null, 'success')
