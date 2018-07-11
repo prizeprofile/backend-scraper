@@ -6,7 +6,7 @@ module.exports = class CompetitionEndDate extends ParserModule {
    * @inheritdoc
    */
   async run () {
-    const tweet = this.competition.data.tweet
+    const tweet = this.competition.resolve('data').tweet
 
     let res = chrono.parseDate(tweet.text, new Date(tweet.posted))
 

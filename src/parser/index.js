@@ -10,5 +10,7 @@ module.exports = async (tweets, region) => {
   let competitions = await Promise.all(jobs)
 
   // Parsing finishes once all tweets have returned some response.
-  return competitions.filter(competition => competition)
+  return competitions
+    .filter(competition => competition)
+    .map(competition => competition.container)
 }
