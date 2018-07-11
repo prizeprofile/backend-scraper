@@ -25,14 +25,14 @@ exports.handler = async (event, context, callback) => {
   // Sends a message to result queue which is read by
   // the scheduler and creates the cycle.
   // TODO: Error handling.
-  SQS.sendMessage({
+  await SQS.sendMessage({
     MessageBody: JSON.stringify({
       region_id,
       tweets_count,
       max_id: tweets_count ? tweets[tweets_count - 1].id_str : null
     }),
     QueueUrl: process.env.TASK_QUEUE_URL
-  })
+  }).promise()
 
   /**
    * Parses the tweets array and saves it into the database.

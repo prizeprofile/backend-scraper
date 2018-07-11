@@ -48,6 +48,11 @@ module.exports = {
       to: 'tweet.favorites'
     },
     {
+      from: ['entities.media', 'entities.extended_entities.media'],
+      which: _.isArray,
+      to: 'tweet.media'
+    },
+    {
       from: 'user.id_str',
       which: _.isString,
       to: 'promoter.twitter_id',
