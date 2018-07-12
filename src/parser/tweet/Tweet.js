@@ -22,9 +22,11 @@ module.exports = class Tweet {
 
     if (! result || typeof result !== 'object') {
       this.valid = false
-    } else {
-      this.data = result
+
+      return this
     }
+
+    this.bind('data', result)
 
     return this
   }

@@ -21,12 +21,13 @@ module.exports = class Parser {
    * @return {void}
    */
   async pipe (data) {
+    // TODO: Move.
     let withValidation = new TweetValidator()
 
     const tweet = new Tweet(withValidation).from(data)
 
     if (!tweet.isTweet()) {
-      return
+      return null
     }
 
     // Runs all the modules that parse data from the tweet.
