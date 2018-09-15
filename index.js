@@ -11,6 +11,8 @@ exports.handler = async (event, context, callback) => {
    * @type {Object}
    */
   const message = JSON.parse(event.Records.pop().Sns.Message)
+  message.params = JSON.parse(message.params)
+  
   const region_id = parseInt(message.region_id)
 
   /**
