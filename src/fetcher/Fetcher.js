@@ -21,12 +21,15 @@ module.exports = class Fetcher {
     let params = this.bag.twittify()
 
     return new Promise((resolve, reject) => {
-      this.client.get(this.bag.method, params, (error, tweets) => {
+      this.client.get(this.bag.method, params, (error, data) => {
         if (error) {
           return reject(error.code)
         }
 
-        resolve(tweets.statuses)
+        resolve({
+          tweets: data.statuses,
+          max_id: data.search_metadata.max_id_str
+        })
       })
     })
   }

@@ -18,17 +18,13 @@ exports.handler = (event, _, callback) => {
     /**
      * @param {any} tweets Tweet collection based on settings from message sorted by tweet id.
      */
-    .then((tweets) => {
+    .then(({ tweets, max_id }) => {
       const tweets_count = tweets.length
 
       // Sends a message to result queue which is read by
       // the scheduler and creates the cycle.
       return SQS.sendMessage({
-        MessageBody: JSON.stringify({
-          region_id,
-          tweets_count,
-          max_id: tweets_count ? tweets[tweets_count - 1].id_str : null
-        }),
+        MessageBody: JSON.stringify({ region_id, tweets_count, max_id }),
         QueueUrl: process.env.TASK_QUEUE_URL
       }).promise()
         .then(() => tweets)
