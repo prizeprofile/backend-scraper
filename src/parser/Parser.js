@@ -20,18 +20,17 @@ module.exports = class Parser {
    * @param {object} data
    * @return {void}
    */
-  async pipe (data) {
-    // TODO: Move.
-    let withValidation = new TweetValidator()
+  pipe (data) {
+    let validator = new TweetValidator()
 
-    const tweet = new Tweet(withValidation).from(data)
+    const tweet = new Tweet(validator).from(data)
 
     if (!tweet.isTweet()) {
       return null
     }
 
     // Runs all the modules that parse data from the tweet.
-    return await this.runModules(tweet)
+    return this.runModules(tweet)
   }
 
   /**
@@ -40,11 +39,11 @@ module.exports = class Parser {
    * @param {Tweet} competition
    * @return {Promise<Tweet>}
    */
-  async runModules (competition) {
-    return this.modules.reduce(async (chain, ParserModule) => {
+  runModules (competition) {
+    return this.modules.reduce((chain, ParserModule) => {
       // Runs every module. Each time the module calls next with a data,
       // that data is passed to the next module as carry.
-      return new ParserModule(await chain).run()
+      return chain.then(data => new ParserModule(data).run())
     }, Promise.resolve(competition))
   }
 }

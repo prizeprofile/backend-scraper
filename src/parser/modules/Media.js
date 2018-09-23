@@ -4,11 +4,11 @@ module.exports = class Media extends ParserModule {
   /**
    * @inheritdoc
    */
-  async run () {
+  run () {
     const media = this.competition.resolve('data').tweet.media
 
     if (! media || ! media.length) {
-        return this.$skip()
+        return Promise.resolve(this.$skip())
     }
 
     let image = media.pop()
@@ -19,6 +19,6 @@ module.exports = class Media extends ParserModule {
         this.competition.bind('media', image)
     }
 
-    return this.competition
+    return Promise.resolve(this.competition)
   }
 }

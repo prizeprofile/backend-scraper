@@ -4,7 +4,7 @@ module.exports = class EntryMethod extends ParserModule {
   /**
    * @inheritdoc
    */
-  async run () {
+  run () {
     const text = this.competition.resolve('data').tweet.text
 
     let methods = []
@@ -18,7 +18,7 @@ module.exports = class EntryMethod extends ParserModule {
     }
 
     // Binds the array to the container and continues.
-    return this.competition.bind('entry_methods', methods)
+    return Promise.resolve(this.competition.bind('entry_methods', methods))
   }
 
   /**

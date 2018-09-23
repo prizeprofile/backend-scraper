@@ -1,6 +1,6 @@
 # AWS Lambda: Twitter Scraper
 
-Fetches tweets, parses them and publishes them to an SNS topic.
+Fetches tweets, parses them and pushes them to an SQS.
 
 The event object has to be of following structure:
 
@@ -14,8 +14,7 @@ event.Records[0].Sns.message = {
 ```
 
 ## Deployment
-_TODO: Use some AWS automation tool rather than grunt._
-Deploy staging with `grunt deploy` and production with `grunt deploy_prod`.
+Deploy with `npm run deploy:{env}`.
 
 ## Tests
 Yet to be written.

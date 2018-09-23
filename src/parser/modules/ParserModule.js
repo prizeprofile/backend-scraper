@@ -19,7 +19,7 @@ module.exports = class ParserModule {
    * @abstract
    * @return {void}
    */
-  async run () { throw new Error('Method run is abstract.') }
+  run () { throw new Error('Method run is abstract.') }
 
   /**
    * Calls next module with the original competition data.
