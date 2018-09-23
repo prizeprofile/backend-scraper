@@ -2,7 +2,7 @@ const Twitter = require('twitter')
 const Fetcher = require('./Fetcher')
 const ParameterBag = require('./ParameterBag')
 
-module.exports = async ({ since_id, params }) => {
+module.exports = ({ since_id, params }) => {
   /**
    * Connects to Twitter as an app.
    * @type {Twitter}

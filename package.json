@@ -1,17 +1,20 @@
 {
-  "name": "backend-scraper",
+  "name": "lambda-backend-scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "Scrapes new competitions from Twitter.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prizeprofile/backend-scraper.git"
+    "url": "git+https://github.com/prizeprofile/lambda-backend-scraper.git"
   },
   "author": "Michael Bausano",
   "license": "ISC",
-  "homepage": "https://github.com/prizeprofile/backend-scraper#readme",
+  "homepage": "https://github.com/prizeprofile/lambda-backend-scraper#readme",
   "scripts": {
-    "test": "mocha"
+    "create:stage": "claudia create --name stage-backend-scraper --region eu-west-1 --handler index.handler --role arn:aws:iam::365488455739:role/scraper_lambda --config claudia-stage.json",
+    "create:prod": "claudia create --name prod-backend-scraper --region eu-west-1 --handler index.handler --role arn:aws:iam::365488455739:role/scraper_lambda --config claudia-prod.json",
+    "deploy:stage": "claudia update --config claudia-stage.json",
+    "deploy:prod": "claudia update --config claudia-prod.json"
   },
   "directories": {
     "src": "src",
@@ -25,9 +28,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.1.0",
-    "npm": "~2.13.0",
-    "grunt": "~0.4.5",
-    "grunt-aws-lambda": "~0.4.0"
+    "claudia": "^5.1.1",
+    "mocha": "^5.1.0"
   }
 }
