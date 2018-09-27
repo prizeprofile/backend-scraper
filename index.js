@@ -18,17 +18,13 @@ exports.handler = (event, _, callback) => {
     /**
      * @param {any} tweets Tweet collection based on settings from message sorted by tweet id.
      */
-    .then((tweets) => {
+    .then(({ tweets, max_id }) => {
       const tweets_count = tweets.length
 
       // Sends a message to result queue which is read by
       // the scheduler and creates the cycle.
       return SQS.sendMessage({
-        MessageBody: JSON.stringify({
-          region_id,
-          tweets_count,
-          max_id: tweets_count ? tweets[tweets_count - 1].id_str : null
-        }),
+        MessageBody: JSON.stringify({ region_id, tweets_count, max_id }),
         QueueUrl: process.env.TASK_QUEUE_URL
       }).promise()
         .then(() => tweets)
@@ -37,12 +33,14 @@ exports.handler = (event, _, callback) => {
       .then(tweets => require('./src/parser')(tweets, region_id))
       // Pushes parsed competitions to a persistor queue.
       .then((competitions) => {
-        return SQS.sendMessage({
-          MessageBody: JSON.stringify({ region_id, competitions }),
-          QueueUrl: process.env.PERSISTOR_QUEUE_URL,
-          MessageGroupId: Date.now() + []
-        })
-        .promise()
+        return competitions.length
+          ? SQS.sendMessage({
+              MessageBody: JSON.stringify({ region_id, competitions }),
+              QueueUrl: process.env.PERSISTOR_QUEUE_URL,
+              MessageGroupId: Date.now() + []
+            })
+            .promise()
+          : Promise.resolve()
       })
       .then(() => callback(null, `Import for region ${region_id} successful.`))
 }
