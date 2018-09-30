@@ -9,7 +9,7 @@ module.exports = class ValidCompetition extends ParserModule {
     const tweet = this.competition.resolve('data').tweet
     const promoter = this.competition.resolve('data').promoter
     
-    if (promoter.verified || promoter.homepage || tweet.retweets > process.env.MIN_COMPETITION_RETWEETS) {
+    if (promoter.verified || promoter.homepage || tweet.retweets >= process.env.MIN_COMPETITION_RETWEETS) {
       return this.$skip()
     }
 
