@@ -40,10 +40,10 @@ module.exports = class Parser {
    * @return {Promise<Tweet>}
    */
   runModules (competition) {
-    return this.modules.reduce((chain, ParserModule) => {
+    return this.modules.reduce(async (chain, ParserModule) => {
       // Runs every module. Each time the module calls next with a data,
       // that data is passed to the next module as carry.
-      return chain.then(data => new ParserModule(data).run())
+      return new ParserModule(await chain).run()
     }, Promise.resolve(competition))
   }
 }

@@ -3,15 +3,15 @@ const Parser = require('./Parser')
 
 module.exports = (tweets, region) => {
   let parser = new Parser(modules, region)
+  let skipped = 0
 
   // Sends all tweets through parser.
-  let jobs = tweets.map(tweet => parser.pipe(tweet).catch(() => null))
+  let competitions = await Promise.all(tweets.map(tweet => parser.pipe(tweet).catch(() => skipped++)))
+
+  console.log(`Skipped ${skipped} competitions.`)
 
   // Parsing finishes once all tweets have returned some response.
-  return Promise.all(jobs)
-    .then((competitions) => {
-      return competitions
-        .filter(competition => competition)
-        .map(competition => competition.container)
-    })
+  return competitions
+    .filter(competition => competition && typeof competition === 'object')
+    .map(competition => competition.container)
 }

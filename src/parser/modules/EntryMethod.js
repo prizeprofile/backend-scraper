@@ -1,10 +1,11 @@
 const ParserModule = require('./ParserModule')
+const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
 module.exports = class EntryMethod extends ParserModule {
   /**
    * @inheritdoc
    */
-  run () {
+  async run () {
     const text = this.competition.resolve('data').tweet.text
 
     let methods = []
@@ -17,8 +18,12 @@ module.exports = class EntryMethod extends ParserModule {
       }
     }
 
+    if (!methods.length) {
+      throw new CompetitionShouldBeSkippedException()
+    }
+
     // Binds the array to the container and continues.
-    return Promise.resolve(this.competition.bind('entry_methods', methods))
+    return this.competition.bind('entry_methods', methods)
   }
 
   /**
@@ -29,7 +34,7 @@ module.exports = class EntryMethod extends ParserModule {
       { name: 'like', regex: /like|fav/gmi },
       { name: 'follow', regex: /follow|\sf\s/gmi },
       { name: 'comment', regex: /comment|reply|mention/gmi },
-      { name: 'friend', regex: /(tag|mention).*(friend)/gmi },
+      { name: 'friend', regex: /(tag|mention).*(friend|mate)/gmi },
       { name: 'retweet', regex: /retweet|rt|repost/gmi }
     ]
   }
