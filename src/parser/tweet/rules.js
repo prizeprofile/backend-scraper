@@ -35,17 +35,20 @@ module.exports = {
     {
       from: 'reply_count',
       which: _.isNumber,
-      to: 'tweet.replies'
+      to: 'tweet.comments',
+      default: 0
     },
     {
       from: 'retweet_count',
       which: _.isNumber,
-      to: 'tweet.retweets'
+      to: 'tweet.retweets',
+      default: 0
     },
     {
       from: 'favorite_count',
       which: _.isNumber,
-      to: 'tweet.favorites'
+      to: 'tweet.favorites',
+      default: 0
     },
     {
       from: ['entities.media', 'entities.extended_entities.media'],
@@ -79,6 +82,11 @@ module.exports = {
       from: 'user.name',
       which: _.isString,
       to: 'promoter.name'
+    },   
+    {
+      from: 'user.url',
+      which: _.isString,
+      to: 'promoter.hopepage'
     },
     {
       from: 'user.verified',

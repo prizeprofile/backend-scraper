@@ -17,16 +17,16 @@ module.exports = class ParserModule {
    * Main logic method.
    *
    * @abstract
-   * @return {void}
+   * @return {Promise<any>}
    */
-  run () { throw new Error('Method run is abstract.') }
+  async run () { throw new Error('Method run is abstract.') }
 
   /**
    * Calls next module with the original competition data.
    *
-   * @return {void}
+   * @return {Promise<any>}
    */
-  $skip () {
+  async $skip () {
     return this._bak
   }
 }
