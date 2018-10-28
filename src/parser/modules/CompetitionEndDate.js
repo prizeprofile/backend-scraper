@@ -8,6 +8,11 @@ module.exports = class CompetitionEndDate extends ParserModule {
   async run () {
     const resource = this.competition.resolve('data').resource
 
+    // Skip uf text does not include a keyword that would suggest tweet's end date.
+    if (!this.regex().test(resource.text)) {
+      return this.$skip()
+    }
+
     let res = chrono.parse(resource.text, new Date(resource.posted))
 
     // If an end date could be parsed save it, otherwise skip this module.
@@ -26,5 +31,12 @@ module.exports = class CompetitionEndDate extends ParserModule {
       .date()
 
     return this.competition.bind('end_date', date)
+  }
+
+  /**
+   * @return {RegExp}
+   */
+  regex () {
+    return /end|announc|pick|chosen|choos|draw|deadline|clos|select/i
   }
 }

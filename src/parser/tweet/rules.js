@@ -35,32 +35,20 @@ module.exports = {
     {
       from: 'reply_count',
       which: _.isNumber,
-<<<<<<< HEAD
-      to: 'resource.comments'
-=======
-      to: 'tweet.comments',
+      to: 'resource.comments',
       default: 0
->>>>>>> develop
     },
     {
       from: 'retweet_count',
       which: _.isNumber,
-<<<<<<< HEAD
-      to: 'resource.retweets'
-=======
-      to: 'tweet.retweets',
+      to: 'resource.retweets',
       default: 0
->>>>>>> develop
     },
     {
       from: 'favorite_count',
       which: _.isNumber,
-<<<<<<< HEAD
-      to: 'resource.favorites'
-=======
-      to: 'tweet.favorites',
+      to: 'resource.favorites',
       default: 0
->>>>>>> develop
     },
     {
       from: ['entities.media', 'entities.extended_entities.media'],
