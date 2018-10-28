@@ -8,7 +8,7 @@ module.exports = class ParserModule {
    */
   constructor (competition) {
     // Stores the original competition object.
-    this._bak = Object.assign({}, competition)
+    this._bak = Object.assign(Object.create(Object.getPrototypeOf(competition)), competition)
 
     this.competition = competition
   }

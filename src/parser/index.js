@@ -1,13 +1,13 @@
 const modules = require('./modules')
 const Parser = require('./Parser')
 
-module.exports = (resources, region) => {
+module.exports = async (resources, region) => {
   let parser = new Parser(modules, region)
   let skipped = 0
 
   // Sends all resources through parser.
   let competitions = await Promise.all(resources
-    .map(resource => parser.pipe(resource).catch(() => skipped++)))
+    .map(resource => parser.pipe(resource).catch(_ => skipped++)))
 
   console.log(`Skipped ${skipped} competitions.`)
 

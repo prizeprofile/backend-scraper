@@ -86,7 +86,7 @@ module.exports = {
     {
       from: 'user.url',
       which: _.isString,
-      to: 'promoter.hopepage'
+      to: 'promoter.homepage'
     },
     {
       from: 'user.verified',

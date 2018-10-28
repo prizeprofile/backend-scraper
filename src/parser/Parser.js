@@ -28,7 +28,7 @@ module.exports = class Parser {
     if (!tweet.isTweet()) {
       return null
     }
-
+    
     // Runs all the modules that parse data from the tweet.
     return this.runModules(tweet)
   }
@@ -40,10 +40,11 @@ module.exports = class Parser {
    * @return {Promise<Tweet>}
    */
   runModules (competition) {
-    return this.modules.reduce(async (chain, ParserModule) => {
+    return this.modules.reduce((chain, ParserModule) => {
       // Runs every module. Each time the module calls next with a data,
       // that data is passed to the next module as carry.
-      return new ParserModule(await chain).run()
+      return chain.then(data => {
+        return new ParserModule(data).run()})
     }, Promise.resolve(competition))
   }
 }

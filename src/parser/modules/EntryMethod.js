@@ -5,7 +5,7 @@ module.exports = class EntryMethod extends ParserModule {
   /**
    * @inheritdoc
    */
-  run () {
+  async run () {
     const text = this.competition.resolve('data').resource.text
 
     let methods = []
