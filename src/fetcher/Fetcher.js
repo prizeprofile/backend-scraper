@@ -13,7 +13,7 @@ module.exports = class Fetcher {
   }
 
   /**
-   * Loads an array with Tweets that match the query in the parameter bag.
+   * Loads an array with resources that match the query in the parameter bag.
    *
    * @return {Promise<number>}
    */
@@ -27,7 +27,7 @@ module.exports = class Fetcher {
         }
 
         resolve({
-          tweets: data.statuses,
+          resources: data.statuses,
           max_id: data.search_metadata.max_id_str
         })
       })

@@ -21,10 +21,10 @@ module.exports = class TweetValidator {
     }
 
     // Parses the data into our standard.
-    let tweet = this.transformers(data)
+    let resource = this.transformers(data)
 
-    // Runs editors and returns Tweet data.
-    return tweet ? this.editors(tweet) : false
+    // Runs editors and returns resource data.
+    return resource ? this.editors(resource) : false
   }
 
   /**
@@ -48,10 +48,10 @@ module.exports = class TweetValidator {
    * @return {boolean|object}
    */
   transformers (data) {
-    const tweet = {}
+    const resource = {}
 
     // If any of transformer rules failed, return false.
-    // If the data are valid, return a tweet object.
+    // If the data are valid, return a resource object.
     return rules.transformers.every((transformer) => {
       let from = this.populate(transformer.from, data)
 
@@ -69,22 +69,22 @@ module.exports = class TweetValidator {
       }
 
       // Deep saves the value on property.
-      this.deepSave(transformer.to, value || transformer.default, tweet)
+      this.deepSave(transformer.to, value || transformer.default, resource)
 
       return true
-    }) ? tweet : false
+    }) ? resource : false
   }
 
   /**
    * Runs all editor functions on data.
    *
-   * @param {object} tweet
+   * @param {object} resource
    * @return {object}
    */
-  editors (tweet) {
+  editors (resource) {
     // Applies all editor rules.
     rules.editors.forEach((editor) => {
-      let runOn = tweet[editor.run]
+      let runOn = resource[editor.run]
 
       if (!runOn) {
         return
@@ -92,15 +92,15 @@ module.exports = class TweetValidator {
 
       // If runOn is an array, run the through function on all of it's items.
       if (_.isArray(runOn)) {
-        tweet[editor.run] = runOn.map(value => editor.through(value))
+        resource[editor.run] = runOn.map(value => editor.through(value))
 
         return
       }
 
-      tweet[editor.run] = editor.through(runOn)
+      resource[editor.run] = editor.through(runOn)
     })
 
-    return tweet
+    return resource
   }
 
   /**

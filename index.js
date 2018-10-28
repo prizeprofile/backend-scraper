@@ -16,31 +16,33 @@ exports.handler = (event, _, callback) => {
 
   return require('./src/fetcher')(message)
     /**
-     * @param {any} tweets Tweet collection based on settings from message sorted by tweet id.
+     * @param {any} resources Resource collection based on settings from message sorted by Resource id.
      */
-    .then(({ tweets, max_id }) => {
-      const tweets_count = tweets.length
+    .then(({ resources, max_id }) => {
+      const resources_count = resources.length
 
       // Sends a message to result queue which is read by
       // the scheduler and creates the cycle.
       return SQS.sendMessage({
-        MessageBody: JSON.stringify({ region_id, tweets_count, max_id }),
+        MessageBody: JSON.stringify({ region_id, resources_count, max_id }),
         QueueUrl: process.env.TASK_QUEUE_URL
       }).promise()
-        .then(() => tweets)
+        .then(() => resources)
     })
-      // Parses the tweets array.
-      .then(tweets => require('./src/parser')(tweets, region_id))
+      // Parses the resources array.
+      .then(resources => require('./src/parser')(resources, region_id))
       // Pushes parsed competitions to a persistor queue.
       .then((competitions) => {
         return competitions.length
           ? SQS.sendMessage({
-              MessageBody: JSON.stringify({ region_id, competitions }),
+              MessageBody: JSON.stringify({ region_id, competitions, method: 'POST' }),
               QueueUrl: process.env.PERSISTOR_QUEUE_URL,
               MessageGroupId: Date.now() + []
             })
             .promise()
-          : Promise.resolve()
+            .then(console.log)
+            .then(() => competitions.length)
+          : Promise.resolve(0)
       })
-      .then(() => callback(null, `Import for region ${region_id} successful.`))
+      .then(len => callback(null, `Import of ${len} competitions for region ${region_id} successful.`))
 }

@@ -5,11 +5,11 @@ module.exports = class EntryMethod extends ParserModule {
    * @inheritdoc
    */
   run () {
-    const text = this.competition.resolve('data').tweet.text
+    const text = this.competition.resolve('data').resource.text
 
     let methods = []
 
-    // Runs all regexes against the Tweet text.
+    // Runs all regexes against the resource text.
     for (let method of this.methods()) {
       if (method.regex.test(text)) {
         // If a regex passes, adds the entry method.

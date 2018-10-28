@@ -1,6 +1,6 @@
 {
   "name": "lambda-backend-scraper",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Scrapes new competitions from Twitter.",
   "main": "index.js",
   "repository": {

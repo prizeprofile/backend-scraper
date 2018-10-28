@@ -5,7 +5,7 @@ module.exports = class Media extends ParserModule {
    * @inheritdoc
    */
   run () {
-    const media = this.competition.resolve('data').tweet.media
+    const media = this.competition.resolve('data').resource.media
 
     if (! media || ! media.length) {
         return Promise.resolve(this.$skip())

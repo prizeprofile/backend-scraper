@@ -1,14 +1,15 @@
 const modules = require('./modules')
 const Parser = require('./Parser')
 
-module.exports = (tweets, region) => {
+module.exports = (resources, region) => {
   let parser = new Parser(modules, region)
 
-  // Sends all tweets through parser.
-  let jobs = tweets.map(tweet => parser.pipe(tweet).catch(() => null))
+  // Sends all resources through parser.
+  let jobs = resources.map(resource => parser.pipe(resource).catch(() => null))
 
-  // Parsing finishes once all tweets have returned some response.
+  // Parsing finishes once all resources have returned some response.
   return Promise.all(jobs)
+    .filter(Boolean)
     .then((competitions) => {
       return competitions
         .filter(competition => competition)

@@ -19,6 +19,6 @@ module.exports = ({ since_id, params }) => {
     .pack('since_id', since_id)
     .pack(params)
     
-  // Fetches the tweets.
+  // Fetches the resources.
   return new Fetcher(client, bag).scrape()
 }

@@ -12,50 +12,50 @@ module.exports = {
     {
       from: ['extended_tweet.full_text', 'full_text', 'text'],
       which: _.isString,
-      to: 'tweet.text',
+      to: 'resource.text',
       required: true
     },
     {
       from: 'id_str',
       which: _.isString,
-      to: 'tweet.tweet_id',
+      to: 'resource.resource_id',
       required: true
     },
     {
       from: ['user.location', 'place', 'geo', 'coordinates', 'lang', 'user.lang'],
       which: [_.isString, 'OR', _.isNumber],
-      to: 'tweet.location'
+      to: 'resource.location'
     },
     {
       from: ['timestamp_ms', 'created_at'],
       which: [_.isString, 'OR', _.isNumber],
-      to: 'tweet.posted',
-      required: true
+      to: 'resource.posted',
+      requiredcs: true
     },
     {
       from: 'reply_count',
       which: _.isNumber,
-      to: 'tweet.replies'
+      to: 'resource.comments'
     },
     {
       from: 'retweet_count',
       which: _.isNumber,
-      to: 'tweet.retweets'
+      to: 'resource.retweets'
     },
     {
       from: 'favorite_count',
       which: _.isNumber,
-      to: 'tweet.favorites'
+      to: 'resource.favorites'
     },
     {
       from: ['entities.media', 'entities.extended_entities.media'],
       which: _.isArray,
-      to: 'tweet.media'
+      to: 'resource.media'
     },
     {
       from: 'user.id_str',
       which: _.isString,
-      to: 'promoter.twitter_id',
+      to: 'promoter.resource_id',
       required: true
     },
     {
