@@ -37,12 +37,6 @@ module.exports = {
       requiredcs: true
     },
     {
-      from: 'reply_count',
-      which: _.isNumber,
-      to: 'resource.comments',
-      default: 0
-    },
-    {
       from: 'retweet_count',
       which: _.isNumber,
       to: 'resource.retweets',
