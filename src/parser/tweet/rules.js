@@ -7,7 +7,7 @@ module.exports = {
       meets: [_.isNil, 'OR', _.isEmpty]
     },
     {
-      the: 'in_reply_to_status_id',
+      the: 'in_reply_to_status_id_str',
       meets: [_.isNil, 'OR', _.isEmpty]
     }
   ],

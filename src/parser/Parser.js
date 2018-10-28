@@ -20,7 +20,7 @@ module.exports = class Parser {
    * @param {object} data
    * @return {void}
    */
-  pipe (data) {
+  async pipe (data) {
     let validator = new TweetValidator()
 
     const tweet = new Tweet(validator).from(data)
