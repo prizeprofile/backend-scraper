@@ -37,6 +37,6 @@ module.exports = class CompetitionEndDate extends ParserModule {
    * @return {RegExp}
    */
   regex () {
-    return /end|announc|pick|chosen|choos|draw|deadline|clos|select/i
+    return /end|announc|pick|chosen|choos|draw|deadline|clos|select|left/i
   }
 }
