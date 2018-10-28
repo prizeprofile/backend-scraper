@@ -5,12 +5,26 @@ module.exports = class CompetitionEndDate extends ParserModule {
   /**
    * @inheritdoc
    */
-  run () {
+  async run () {
     const resource = this.competition.resolve('data').resource
 
-    let res = chrono.parseDate(resource.text, new Date(resource.posted))
+    let res = chrono.parse(resource.text, new Date(resource.posted))
 
-    // If an end date could be parsed, save it, otherwise skip this module.
-    return Promise.resolve(res ? this.competition.bind('end_date', res) : this.$skip())
+    // If an end date could be parsed save it, otherwise skip this module.
+    if (! res.length) {
+      return this.$skip()
+    }
+
+    // Getting the latest date from the competition text.
+    let date = res.sort((a, b) => {
+      a = a.start.date()
+      b = b.start.date()
+      return a > b ? 1 : a < b ? -1 : 0
+    })
+      .pop()
+      .start
+      .date()
+
+    return this.competition.bind('end_date', date)
   }
 }
