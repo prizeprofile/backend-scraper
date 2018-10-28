@@ -7,16 +7,16 @@ module.exports = class Entrants extends ParserModule {
   run () {
     const resource = this.competition.resolve('data').resource
     const methods = this.competition.resolve('entry_methods')
-    let entrants = 0
+    let entrants = null
 
     if (methods.includes('retweet')) {
-      entrants = Math.min(entrants, resource.retweets)
+      entrants = entrants === null ? resource.retweets : Math.min(entrants, resource.retweets)
     }
     
     if (methods.includes('like')) {
-      entrants = Math.min(entrants, resource.favorites)
+      entrants = entrants === null ? resource.favorites : Math.min(entrants, resource.favorites)
     }
 
-    return this.competition.bind('entrants', entrants)
+    return this.competition.bind('entrants', entrants || 0)
   }
 }
