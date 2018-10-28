@@ -5,6 +5,10 @@ module.exports = {
     {
       the: 'retweeted_status',
       meets: [_.isNil, 'OR', _.isEmpty]
+    },
+    {
+      the: 'in_reply_to_status_id',
+      meets: [_.isNil, 'OR', _.isEmpty]
     }
   ],
 
