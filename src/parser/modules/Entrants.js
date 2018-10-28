@@ -8,14 +8,10 @@ module.exports = class Entrants extends ParserModule {
     const promoter = this.competition.resolve('data').promoter
     const resource = this.competition.resolve('data').resource
     const methods = this.competition.resolve('entry_methods')
-    let entrants = promoter.followers || 0
+    let entrants = 0
 
     if (methods.includes('retweet')) {
       entrants = Math.min(entrants, resource.retweets)
-    }
-
-    if (methods.includes('comment') || methods.includes('friend')) {
-      entrants = Math.min(entrants, resource.comments)
     }
     
     if (methods.includes('like')) {
