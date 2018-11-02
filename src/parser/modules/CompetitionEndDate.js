@@ -30,6 +30,10 @@ module.exports = class CompetitionEndDate extends ParserModule {
       .start
       .date()
 
+    if (new Date() > date) {
+      throw new CompetitionShouldBeSkippedException()
+    }
+
     return this.competition.bind('end_date', date)
   }
 
