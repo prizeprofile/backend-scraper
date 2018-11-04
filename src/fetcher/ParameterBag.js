@@ -38,10 +38,21 @@ module.exports = class ParameterBag {
    *
    * @return {string}
    */
-  geocode () {
-    return this.data.latitude + ',' +
-      this.data.longitude + ',' +
-      this.data.radius + this.data.units
+  get geocode () {
+    const { latitude, longitude, radius, units } = this.data
+
+    return `${latitude},${longitude},${radius}${units}`
+  }
+
+  /**
+   * Creates a keyword query string.
+   * 
+   * @return {string}
+   */  
+  get keywords () {
+    return this.data.query.reduce((carry, { operator, keywords, join }) => {
+      return `${carry} ${operator || ''} (${keywords.join(` ${join} `)})`
+    }, '').trim()
   }
 
   /**
@@ -52,12 +63,13 @@ module.exports = class ParameterBag {
   twittify () {
     return {
       count: 100,
-      lang: this.data.lang,
+      result_type: 'recent',
       tweet_mode: 'extended',
+      lang: this.data.lang,
       include_entities: true,
-      geocode: this.geocode(),
+      geocode: this.geocode,
       since_id: this.data.since_id,
-      q: this.data.keywords.join(' OR ')
+      q: this.keywords
     }
   }
 }
