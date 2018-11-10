@@ -2,7 +2,7 @@ const modules = require('./modules')
 const Parser = require('./Parser')
 
 module.exports = async (resources, region) => {
-  let parser = new Parser(modules, region)
+  let parser = new Parser(modules, region, {})
   let skipped = 0
 
   // Sends all resources through parser.

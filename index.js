@@ -11,7 +11,7 @@ exports.handler = (event, _, callback) => {
    */
   const message = JSON.parse(event.Records.pop().Sns.Message)
   message.params = JSON.parse(message.params)
-  
+
   const region_id = parseInt(message.region_id)
 
   return require('./src/fetcher')(message)

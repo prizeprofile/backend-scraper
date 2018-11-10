@@ -3,13 +3,13 @@ module.exports = class ParserModule {
   /**
    * Class @constructor.
    *
-   * @param {object} competition
-   * @param {function} next
+   * @param {any} container
+   * @param {any} competition
    */
-  constructor (competition) {
+  constructor (container, competition) {
     // Stores the original competition object.
     this._bak = Object.assign(Object.create(Object.getPrototypeOf(competition)), competition)
-
+    this.container = container
     this.competition = competition
   }
 

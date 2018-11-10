@@ -7,11 +7,12 @@ module.exports = class Parser {
    *
    * @param {number} region
    * @param {ParserModule[]}
+   * @param {any} container
    */
-  constructor (modules, region) {
-    this.modules = modules
-
+  constructor (modules, region, container) {
     this.region = region
+    this.modules = modules
+    this.container = container
   }
 
   /**
@@ -28,7 +29,7 @@ module.exports = class Parser {
     if (!tweet.isTweet()) {
       return null
     }
-    
+
     // Runs all the modules that parse data from the tweet.
     return this.runModules(tweet)
   }
@@ -44,7 +45,7 @@ module.exports = class Parser {
       // Runs every module. Each time the module calls next with a data,
       // that data is passed to the next module as carry.
       return chain.then(data => {
-        return new ParserModule(data).run()})
+        return new ParserModule(this.container, data).run()})
     }, Promise.resolve(competition))
   }
 }
