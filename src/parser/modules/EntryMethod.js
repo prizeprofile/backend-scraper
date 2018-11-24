@@ -32,10 +32,10 @@ module.exports = class EntryMethod extends ParserModule {
   methods () {
     return [
       { name: 'like', regex: /like|fav/gmi },
-      { name: 'follow', regex: /follow|\sf\s/gmi },
-      { name: 'comment', regex: /comment|reply|mention/gmi },
-      { name: 'friend', regex: /(tag|mention).{0,10}(pal|friend|mate)/gmi },
-      { name: 'retweet', regex: /retweet|\srt\s|repost/gmi }
+      { name: 'follow', regex: /follow|\s#?f\s/gmi },
+      { name: 'comment', regex: /comment|reply|mention|let\sus\sknow|(tell|tweet)\sus/gmi },
+      { name: 'friend', regex: /(tag|mention).{0,10}(pal|friend|mate|squad)/gmi },
+      { name: 'retweet', regex: /retweet|[^a-z]rt[^a-z]|repost|share/gmi }
     ]
   }
 }
