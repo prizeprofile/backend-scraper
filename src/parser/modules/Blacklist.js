@@ -13,7 +13,7 @@ module.exports = class Blacklist extends ParserModule {
 
     // If promoter's screen name doesn't fit any of the blacklisted regexes,
     // continue to next pipe.
-    if (!blacklist.find(item => new RegExp(item).test(promoter))) {
+    if (!blacklist.find(item => new RegExp(item, 'i').test(promoter))) {
       return this.$skip()
     }
 
