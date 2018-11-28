@@ -1,8 +1,8 @@
-const modules = require('./modules')
+const pipes = require('./pipes')
 const Parser = require('./Parser')
 
 module.exports = async (resources, region) => {
-  let parser = new Parser(modules, region, {})
+  let parser = new Parser(pipes, region, {})
   let skipped = 0
 
   // Sends all resources through parser.

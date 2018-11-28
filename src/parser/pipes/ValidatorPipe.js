@@ -1,7 +1,7 @@
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
-module.exports = class ValidCompetition extends ParserModule {
+module.exports = class ValidatorPipe extends Pipe {
   /**
    * @inheritdoc
    */
@@ -14,6 +14,6 @@ module.exports = class ValidCompetition extends ParserModule {
       return this.$skip()
     }
 
-    throw new CompetitionShouldBeSkippedException()
+    throw new CompetitionShouldBeSkippedException('ValidatorPipe')
   }
 }

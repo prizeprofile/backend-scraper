@@ -1,7 +1,7 @@
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
-module.exports = class EntryMethod extends ParserModule {
+module.exports = class EntryMethodsPipe extends Pipe {
   /**
    * @inheritdoc
    */
@@ -19,7 +19,7 @@ module.exports = class EntryMethod extends ParserModule {
     }
 
     if (!methods.length) {
-      throw new CompetitionShouldBeSkippedException()
+      throw new CompetitionShouldBeSkippedException('EntryMethodsPipe')
     }
 
     // Binds the array to the container and continues.

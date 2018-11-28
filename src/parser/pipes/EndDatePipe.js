@@ -1,7 +1,8 @@
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 const chrono = require('chrono-node').en_GB
+const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
-module.exports = class CompetitionEndDate extends ParserModule {
+module.exports = class EndDatePipe extends Pipe {
   /**
    * @inheritdoc
    */
@@ -31,7 +32,7 @@ module.exports = class CompetitionEndDate extends ParserModule {
       .date()
 
     if (new Date() > date) {
-      throw new CompetitionShouldBeSkippedException()
+      throw new CompetitionShouldBeSkippedException('EndDatePipe')
     }
 
     return this.competition.bind('end_date', date)

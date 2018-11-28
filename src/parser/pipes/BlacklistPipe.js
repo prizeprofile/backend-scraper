@@ -1,9 +1,9 @@
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
-module.exports = class Blacklist extends ParserModule {
+module.exports = class BlacklistPipe extends Pipe {
   /**
    * @inheritdoc
    */
@@ -17,7 +17,7 @@ module.exports = class Blacklist extends ParserModule {
       return this.$skip()
     }
 
-    throw new CompetitionShouldBeSkippedException()
+    throw new CompetitionShouldBeSkippedException('BlacklistPipe')
   }
 
   /**

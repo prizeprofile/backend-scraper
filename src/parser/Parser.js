@@ -6,12 +6,12 @@ module.exports = class Parser {
    * Class @constructor.
    *
    * @param {number} region
-   * @param {ParserModule[]}
+   * @param {Pipe[]}
    * @param {any} container
    */
-  constructor (modules, region, container) {
+  constructor (pipes, region, container) {
     this.region = region
-    this.modules = modules
+    this.pipes = pipes
     this.container = container
   }
 
@@ -30,22 +30,22 @@ module.exports = class Parser {
       return null
     }
 
-    // Runs all the modules that parse data from the tweet.
-    return this.runModules(tweet)
+    // Runs all the pipes that parse data from the tweet.
+    return this.convey(tweet)
   }
 
   /**
-   * Passes the competition through all registered modules.
+   * Passes the competition through all registered pipes.
    *
    * @param {Tweet} competition
    * @return {Promise<Tweet>}
    */
-  runModules (competition) {
-    return this.modules.reduce((chain, ParserModule) => {
-      // Runs every module. Each time the module calls next with a data,
-      // that data is passed to the next module as carry.
+  convey (competition) {
+    return this.pipes.reduce((chain, Pipe) => {
+      // Runs every pipe. Each time the pipe calls next with a data,
+      // that data is passed to the next pipe as carry.
       return chain.then(data => {
-        return new ParserModule(this.container, data).run()})
+        return new Pipe(this.container, data).run()})
     }, Promise.resolve(competition))
   }
 }

@@ -1,6 +1,6 @@
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 
-module.exports = class Media extends ParserModule {
+module.exports = class MediaPipe extends Pipe {
   /**
    * @inheritdoc
    */

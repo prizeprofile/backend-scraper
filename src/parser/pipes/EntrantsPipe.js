@@ -1,6 +1,6 @@
-const ParserModule = require('./ParserModule')
+const Pipe = require('./Pipe')
 
-module.exports = class Entrants extends ParserModule {
+module.exports = class EntrantsPipe extends Pipe {
   /**
    * @inheritdoc
    */
@@ -12,7 +12,7 @@ module.exports = class Entrants extends ParserModule {
     if (methods.includes('retweet')) {
       entrants = entrants === null ? resource.retweets : Math.min(entrants, resource.retweets)
     }
-    
+
     if (methods.includes('like')) {
       entrants = entrants === null ? resource.favorites : Math.min(entrants, resource.favorites)
     }
