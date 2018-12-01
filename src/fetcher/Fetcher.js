@@ -22,6 +22,7 @@ module.exports = class Fetcher {
 
     return new Promise((resolve, reject) => {
       this.client.get(this.bag.method, params, (error, data) => {
+
         if (error) {
           return reject(error.code)
         }
