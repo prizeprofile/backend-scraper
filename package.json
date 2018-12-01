@@ -1,6 +1,6 @@
 {
   "name": "lambda-backend-scraper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Scrapes new competitions from Twitter.",
   "main": "index.js",
   "repository": {
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.250.1",
+    "bad-words": "^3.0.0",
     "chrono-node": "^1.3.5",
     "lodash": "^4.17.5",
     "twitter": "^1.7.1"
