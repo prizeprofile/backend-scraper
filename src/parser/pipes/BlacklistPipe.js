@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
-const badWords = new require('bad-words')()
+const BadWords = require('bad-words')
 const Pipe = require('./Pipe')
 const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
 
@@ -21,7 +21,7 @@ module.exports = class BlacklistPipe extends Pipe {
     }
 
     // Check that the tweet does not include swear words.
-    if (!badWords.isProfane(text)) {
+    if (!new BadWords().isProfane(text)) {
       return this.$skip()
     }
 
