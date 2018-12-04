@@ -16,15 +16,15 @@ module.exports = class BlacklistPipe extends Pipe {
 
     // If promoter's screen name doesn't fit any of the blacklisted regexes,
     // continue to next pipe.
-    if (!blacklist.find(item => new RegExp(item, 'i').test(screen_name.trim()))) {
-      return this.next()
+    if (blacklist.some(reg => new RegExp(reg, 'gmi').test(screen_name))) {
+      throw new CompetitionShouldBeSkippedException('BlacklistPipe')
     }
 
-    if (!new BadWords().isProfane(text)) {
-      return this.next()
+    if (new BadWords().isProfane(text)) {
+      throw new CompetitionShouldBeSkippedException('BlacklistPipe')
     }
 
-    throw new CompetitionShouldBeSkippedException('BlacklistPipe')
+    return this.next()
   }
 
   /**
