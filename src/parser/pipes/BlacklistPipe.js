@@ -16,7 +16,7 @@ module.exports = class BlacklistPipe extends Pipe {
 
     // If promoter's screen name doesn't fit any of the blacklisted regexes,
     // continue to next pipe.
-    if (!blacklist.find(item => new RegExp(item, 'i').test(screen_name))) {
+    if (!blacklist.find(item => new RegExp(item, 'i').test(screen_name.trim()))) {
       return this.next()
     }
 
@@ -28,7 +28,7 @@ module.exports = class BlacklistPipe extends Pipe {
   }
 
   /**
-   * @return {Promise<string>}
+   * @return {Promise<string[]>}
    */
   async getBlacklistedPromoters () {
     if (!this.container.blacklist) {
