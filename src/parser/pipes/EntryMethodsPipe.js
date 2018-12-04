@@ -1,5 +1,5 @@
 const Pipe = require('./Pipe')
-const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
+const { CompetitionShouldBeSkippedException } = require('../Exceptions')
 
 module.exports = class EntryMethodsPipe extends Pipe {
   /**

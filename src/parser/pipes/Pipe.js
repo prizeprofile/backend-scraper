@@ -26,7 +26,7 @@ module.exports = class Pipe {
    *
    * @return {Promise<any>}
    */
-  async $skip () {
+  async next () {
     return this._bak
   }
 }

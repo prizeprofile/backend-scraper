@@ -2,27 +2,26 @@ const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
 const BadWords = require('bad-words')
 const Pipe = require('./Pipe')
-const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
+const { CompetitionShouldBeSkippedException } = require('../Exceptions')
 
 module.exports = class BlacklistPipe extends Pipe {
   /**
    * @inheritdoc
    */
   async run () {
-    const promoter = this.competition.resolve('data').promoter.screen_name
+    const { screen_name } = this.competition.resolve('data').promoter
     const text = this.competition.resolve('data').text
 
     const blacklist = await this.getBlacklistedPromoters()
 
     // If promoter's screen name doesn't fit any of the blacklisted regexes,
     // continue to next pipe.
-    if (!blacklist.find(item => new RegExp(item, 'i').test(promoter))) {
-      return this.$skip()
+    if (!blacklist.find(item => new RegExp(item, 'i').test(screen_name))) {
+      return this.next()
     }
 
-    // Check that the tweet does not include swear words.
     if (!new BadWords().isProfane(text)) {
-      return this.$skip()
+      return this.next()
     }
 
     throw new CompetitionShouldBeSkippedException('BlacklistPipe')

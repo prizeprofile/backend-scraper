@@ -8,7 +8,7 @@ module.exports = class MediaPipe extends Pipe {
     const media = this.competition.resolve('data').resource.media
 
     if (! media || ! media.length) {
-      return this.$skip()
+      return this.next()
     }
 
     let image = media.pop()

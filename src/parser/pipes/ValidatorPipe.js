@@ -1,5 +1,5 @@
 const Pipe = require('./Pipe')
-const CompetitionShouldBeSkippedException = require('../Exceptions').CompetitionShouldBeSkippedException
+const { CompetitionShouldBeSkippedException } = require('../Exceptions')
 
 module.exports = class ValidatorPipe extends Pipe {
   /**
@@ -11,7 +11,7 @@ module.exports = class ValidatorPipe extends Pipe {
     const media = this.competition.resolve('media')
 
     if ((promoter.verified || media) && resource.retweets >= process.env.MIN_COMPETITION_RETWEETS) {
-      return this.$skip()
+      return this.next()
     }
 
     throw new CompetitionShouldBeSkippedException('ValidatorPipe')
