@@ -5,7 +5,11 @@ module.exports = class BeautifyTextPipe extends Pipe {
    * @var {RegExp}
    */
   get trailingLink () {
-    return /\shttps:\/\/t\.co\/[a-z0-9]+$/gi
+    return /\shttps:\/\/t\.co\/[a-z0-9]+$/i
+  }
+
+  get trailingHashtags () {
+    return /(#[a-z0-9]+(\s|$))+$/i
   }
 
   /**
@@ -15,7 +19,9 @@ module.exports = class BeautifyTextPipe extends Pipe {
     const { resource } = this.competition.resolve('data')
 
     // Strips out the link that is appended to each tweet.
-    resource.text = resource.text.replace(this.trailingLink, '')
+    resource.text = resource.text
+      .replace(this.trailingLink, '')
+      .replace(this.trailingHashtags, '')
 
     return this.competition
   }
